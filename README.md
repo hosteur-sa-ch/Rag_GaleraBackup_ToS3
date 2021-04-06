@@ -129,7 +129,7 @@ e/n/d/r/c/s/q> q
 *To test the configuration use command line below to list bucket and folder*
 
 <code>rclone ls S3BACKUP:[BUCKET]</code>
->Should list all object in the bucket.
+>Should list all objects in the bucket.
 
 
 ### On Galera Volumes
@@ -141,18 +141,19 @@ Change /var/lib/jelastic/backup volume from local to NFS
 ### Create Sync Script and Cronjob
 
 <code>curl https://raw.githubusercontent.com/hosteur-sa-ch/Rag_GaleraBackup_ToS3/main/script/syncbackup.sh > /root/syncbackup.sh</code>
+>Change bucket and folders on this.
 
 <code>echo "10 * * * * /root/syncbackup.sh" >> /etc/crontab && chmod +x /root/syncbackup.sh</code>
 
 ## Activate Jelastic Backup crontjob
 
-*on one galera node*
+*on one galera node (named it BACKUP)*
 
 Go to cron folder and activate the jelastic default backup script like this.
 
 *Backup every hour the database*
 <code>0 * * * * /var/lib/jelastic/bin/backup_script.sh -m dump -c 15 -u jelastic-XXXX -p [database-pass] -d [db_to_backup]</code>
+**!!! Save only on this instance !!!**
 
 Get New Backup Script from https://raw.githubusercontent.com/hosteur-sa-ch/Rag_GaleraBackup_ToS3/main/script/backup_script.sh and replace current one.
-
 >The modification is only to remove bzip feature as default, this compression will be apply by storage node and node load galera node for it.
