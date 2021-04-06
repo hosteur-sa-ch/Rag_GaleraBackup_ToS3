@@ -163,36 +163,25 @@ DBUSER=$1
     -p ) shift
 DBPASSWORD=$1
 ;;
-    elif [ "$DBCOUNT" -gt 1 ]
-    then
-for db in $DATABASE
-do
-db_dump "$db" "${BACKUPDIR}/${db}-${DATE}.sql"
-if [ $? -eq 0 ];
-then
-log "Done! DB: ${db}-${DATE}.sql.bz2 DATE: ${DATE}";
-else
-log "ERROR making backup. DB: ${db}. DATE: ${DATE}. `cat ${TMP}`";
-rm -rf ${TMP};
-fi
+    -d ) shift
+DATABASE=$1
+;;
+    -t ) shift
+TABLES=$1
+;;
+    *)  usage
+exit 1
+  esac
+  shift
 done
-#   else
-#      echo "Don't know what to do... :("
-    fi
-#    echo "$SECONDS" > $TIMEMARKFILE
-}
 
-while [ "$1" != "" ]; do
-  case $1 in
-    -m )  shift
-action=$1
+case $action in
+    "dump" )
+do_action
 ;;
-    -c ) shift
-BKCOUNT=$1
+    "dumpall" )
+dumpall
 ;;
-    -u ) shift
-DBUSER=$1
-;;
-    -p ) shift
-DBPASSWORD=$1
-;;
+    *) usage $1
+    exit 1
+esac
