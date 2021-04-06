@@ -156,5 +156,5 @@ Go to cron folder and activate the jelastic default backup script like this.
 
 <code>0 * * * * /var/lib/jelastic/bin/backup_script.sh -m dump -c 15 -u jelastic-XXXX -p [database-pass] -d [db_to_backup]</code>
 
-Get New Backup Script from [Github]https://raw.githubusercontent.com/hosteur-sa-ch/Rag_GaleraBackup_ToS3/main/script/backup_script.sh and replace current one.
+Get New Backup Script from [Github](https://raw.githubusercontent.com/hosteur-sa-ch/Rag_GaleraBackup_ToS3/main/script/backup_script.sh) and replace current one.
 >The modification is only to remove bzip feature as default, this compression will be apply by storage node and node load galera node for it.
